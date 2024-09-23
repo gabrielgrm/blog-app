@@ -62,4 +62,23 @@ router.post("/categorias/nova", (req, res) => {
 
 })
 
+router.get("/categorias/edit/:id", (req,res) => {
+  Categoria.findOne({_id:req.params.id}).then((categoria) => {
+    const plainCategorias = categoria.toObject()
+    res.render("admin/editcategorias", {categoria: plainCategorias})
+  }).catch((err) => {
+    req.flash("error_msg", "Esta categoria não existe")
+    res.redirect("/admin/categorias")
+  })
+})
+
+router.post("/categorias/edit", (req,res) => {
+  Categoria.findOne({_id:req.body.id}).then((categoria) => {
+    categoria.nome = req.body.nome
+    categoria.slug = req.body.slug
+  }).catch((err) => {
+    req.flash("error_msg", "Houve um erro ao editar a categoria")
+    res.redirect("/admind/categorias")
+  })
+})
 module.exports = router

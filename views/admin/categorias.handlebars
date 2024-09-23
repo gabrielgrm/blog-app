@@ -7,9 +7,15 @@
   <div class="card-body">
     <h4> {{nome}} </h4>
     <small>Slug: {{slug}} </small><br>
-    <small>Data de criação: {{date}}</small>
+    <small>Data de criação: {{date}}</small><br>
+  <a href="/admin/categorias/edit/{{_id}}"><button class="btn btn-success mt-4">Editar categoria</button></a>
+    
   </div>
 </div>
 {{else}}
-<p>nenhuma categoria encontrada</p>
+<div class="card mt-4 align-center">
+  <div class="card-body">
+    <h4> Nenhuma categoria encontrada </h4>
+  </div>
+</div>
 {{/each}}
