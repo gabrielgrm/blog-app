@@ -1,8 +1,8 @@
-<div>
+<div class="bg-body-secondary rounded p-5">
   <h1 class="display-4"> blog-app </h1>
-  <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo corporis doloribus voluptatem nemo sapiente quas delectus error rerum sint voluptates amet saepe fugiat assumenda porro perferendis, est totam incidunt eligendi?</p>
+  <p class="lead">Esse é um blog desenvolvido com Node.js + Express + MongoDB.</p>
   <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p>Aqui você vai poder ler sobre as novidades do mundo da computação.</p>
   <p class="lead">
   <a class="btn btn-primary btn-lg" href="#" role="button">Crie uma conta</a>
   </p>
@@ -12,13 +12,21 @@
 <h2 class="display-6">Postagens recentes</h2>
 
 {{#each postagens}}
-<div class="card">
+<div class="card mt-4">
   <div class="card-body">
     <h3>{{titulo}}</h3>
     <p>{{descricao}}</p>
+    <a href="/postagem/{{slug}}"><button class="btn btn-success">Leia mais</button></a>
+    <hr>
+    <small>Categoria: {{categoria.nome}}</small><br>
+    <small>Publicado: {{formatDate date}}</small>
   </div>
 </div>
 
 {{else}}
-<p>Nenhuma postagem</p>
+<div class="card">
+  <div class="card-body">
+    <h3>Nenhuma postagem</h3>
+  </div>
+</div>
 {{/each}}
