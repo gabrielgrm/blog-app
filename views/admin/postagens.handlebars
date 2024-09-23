@@ -8,9 +8,15 @@
       <h4>{{titulo}}</h4>
       <p>Descrição: {{descricao}}</p>
       <small>Data: {{formatDate date}}</small><br>
-      <small>Categoria: {{categoria.nome}}</small>
+      <small>Categoria: {{categoria.nome}}</small><br>
+      <a href="/admin/postagens/edit/{{_id}}"><button class="btn btn-success">Editar postagem</button></a>
+      <a href="/admin/postagens/deletar/{{_id}}"><button class="btn btn-danger">Deletar postagem</button></a>
     </div>
   </div>
 {{else}}
-  <p>Nenhuma postagem registrada!</p>
+  <div class="card mt-4">
+    <div class="card-body">
+      <h4> Nenhuma categoria encontrada </h4>
+    </div>
+  </div>
 {{/each}}
