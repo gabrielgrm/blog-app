@@ -72,13 +72,48 @@ router.get("/categorias/edit/:id", (req,res) => {
   })
 })
 
-router.post("/categorias/edit", (req,res) => {
-  Categoria.findOne({_id:req.body.id}).then((categoria) => {
-    categoria.nome = req.body.nome
-    categoria.slug = req.body.slug
+router.post("/categorias/edit", (req, res) => {
+  Categoria.findOne({ _id: req.body.id }).then((categoria) => {
+    var erros1 = [];
+    
+    if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
+      erros1.push({ texto: "Nome inválido" });
+    }
+    else if (req.body.nome.length < 2) {
+      erros1.push({ texto: "Nome da categoria é muito pequeno" });
+    }
+    if (!req.body.slug || typeof req.body.slug == undefined || req.body.slug == null) {
+      erros1.push({ texto: "Slug inválido" });
+    }
+
+
+    if (erros1.length > 0) {
+      req.flash("error_msg", erros1.map(err => err.texto).join(", "));
+      return res.redirect("/admin/categorias/edit/" + req.body.id);
+    } else {
+      categoria.nome = req.body.nome;
+      categoria.slug = req.body.slug;
+      categoria.save().then(() => {
+        req.flash("success_msg", "Categoria editada com sucesso!");
+        res.redirect("/admin/categorias");
+      }).catch((err) => {
+        req.flash("error_msg", "Houve um erro interno ao salvar a edição");
+        res.redirect("/admin/categorias");
+      });
+    }
   }).catch((err) => {
-    req.flash("error_msg", "Houve um erro ao editar a categoria")
-    res.redirect("/admind/categorias")
+    req.flash("error_msg", "Houve um erro ao editar a categoria");
+    res.redirect("/admin/categorias");
+  });
+});
+
+router.post("/categorias/deletar", (req,res) => {
+  Categoria.findOneAndDelete({_id: req.body.id}).then(() => {
+    req.flash("success_msg", "Categoria removida com sucesso")
+    res.redirect("/admin/categorias")
+  }).catch((err) => {
+    req.flash("error_msg", "Houve um erro ao deletar categoria")
+    res.redirect("/admin/categorias")
   })
 })
 module.exports = router
