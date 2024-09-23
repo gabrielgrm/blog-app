@@ -8,6 +8,8 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require("express-session")
 const flash = require("connect-flash")
+const moment = require('moment');  // Moment.js para formatar datas
+
 // Configurações
   // Sessão
   app.use(session({
@@ -26,7 +28,14 @@ const flash = require("connect-flash")
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
   // Handlebars 
-    app.engine('handlebars', engine({defaultLayout: 'main'}))
+    app.engine('handlebars', engine({
+      defaultLayout: 'main',
+      helpers: {
+        formatDate: function (date) {
+          return moment(date).format('LLL');
+        }
+      }
+    }));
     app.set('view engine', 'handlebars')
   // Mongoose
     mongoose.Promise = global.Promise
