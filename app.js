@@ -8,7 +8,9 @@ const path = require('path')
 const mongoose = require('mongoose')
 const session = require("express-session")
 const flash = require("connect-flash")
-const moment = require('moment');  // Moment.js para formatar datas
+const moment = require('moment');
+require("./models/Postagem")
+const Postagem = mongoose.model("postagens")
 
 // Configurações
   // Sessão
@@ -53,7 +55,16 @@ const moment = require('moment');  // Moment.js para formatar datas
     })
 // Rotas
   app.get('/', (req,res) => {
-    res.send('Rota principal')
+    Postagem.find().populate("categoria").sort({date: "desc"}).then((postagens) => {
+      const mappost = postagens.map(postagens => postagens.toObject())
+      res.render("index", {postagens: mappost})
+    }).catch((err) => {
+      req.flash("error_msg", "Houve um erro interno")
+      res.redirect("/404")
+    })
+  })
+  app.get("/404", (req,res) => {
+    res.send("Erro 404!")
   })
   app.get('/posts', (req,res) => {
     res.send('Lista de posts')

@@ -1,0 +1,24 @@
+<div>
+  <h1 class="display-4"> blog-app </h1>
+  <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo corporis doloribus voluptatem nemo sapiente quas delectus error rerum sint voluptates amet saepe fugiat assumenda porro perferendis, est totam incidunt eligendi?</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+  <a class="btn btn-primary btn-lg" href="#" role="button">Crie uma conta</a>
+  </p>
+</div>
+
+<hr>
+<h2 class="display-6">Postagens recentes</h2>
+
+{{#each postagens}}
+<div class="card">
+  <div class="card-body">
+    <h3>{{titulo}}</h3>
+    <p>{{descricao}}</p>
+  </div>
+</div>
+
+{{else}}
+<p>Nenhuma postagem</p>
+{{/each}}
