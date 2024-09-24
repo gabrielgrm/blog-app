@@ -86,13 +86,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Rotas
 app.get('/', async (req, res) => {
   try {
-    console.log("Rota inicial acessada");
     const postagens = await Postagem.find().populate('categoria').sort({ date: 'desc' });
-    console.log("Postagens encontradas: ", postagens);
     const mappost = postagens.map(postagem => postagem.toObject());
     res.render('index', { postagens: mappost });
   } catch (err) {
-    console.error("Erro ao buscar postagens: ", err);
     req.flash('error_msg', 'Houve um erro interno');
     res.redirect('/404');
   }
