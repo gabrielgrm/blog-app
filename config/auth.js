@@ -12,7 +12,7 @@ module.exports = function(passport) {
       if (!usuario) {
         return done(null, false, { message: "Esta conta não existe" });
       }
-
+      
       const isMatch = await bcrypt.compare(senha, usuario.senha);
 
       if (isMatch) {

@@ -3,6 +3,7 @@ const express = require('express')
 const {engine} = require('express-handlebars')
 const bodyParser = require("body-parser" )
 const app = express()
+require("dotenv").config();
 const admin = require('./routes/admin')
 const path = require('path')
 const mongoose = require('mongoose')
@@ -17,7 +18,6 @@ const Categoria = mongoose.model("categorias")
 const usuarios = require('./routes/usuarios')
 const passport = require("passport")
 require("./config/auth")(passport)
-const db = require("./config/db")
 // Configurações
   // Sessão
   app.use(session({
@@ -52,12 +52,16 @@ const db = require("./config/db")
     app.set('view engine', 'handlebars')
   // Mongoose
     mongoose.Promise = global.Promise
-    mongoose.connect(db.mongoURI).then(() => {
+    mongoose.connect(process.env.MONGODB_CONNECT_URI).then(() => {
       console.log("Conectado ao mongo")
     }).catch((err) => {
       console.log("Erro ao se conectar: " + err)
     })
   // Public
+    app.use((req, res, next) => {
+      console.log('OI EU SOU UM MIDLEWARE')
+      next()
+    })
     app.use(express.static(path.join(__dirname,"public")))
 // Rotas
   app.get('/', (req,res) => {
@@ -126,7 +130,9 @@ const db = require("./config/db")
   app.use('/admin', admin)
   app.use('/usuarios', usuarios)
 // Outros
-const PORT = process.env.PORT || 8081
+const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log('Servidor rodando! ')
+  console.log('Servidor rodando on PORT! ' + PORT)
 })
+
+module.exports = app;
