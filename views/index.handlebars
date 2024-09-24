@@ -1,18 +1,21 @@
 <div class="bg-body-secondary rounded p-5">
   <h1 class="display-4"> blog-app </h1>
   <p class="lead">Esse é um blog desenvolvido com Node.js + Express + MongoDB.</p>
+  {{#if user}}
+  {{else}}
   <hr class="my-4">
   <p>Aqui você vai poder ler sobre as novidades do mundo da computação.</p>
   <p class="lead">
-  <a class="btn btn-primary btn-lg" href="#" role="button">Crie uma conta</a>
+  <a class="btn btn-primary btn-lg" href="/usuarios/registro" role="button">Crie uma conta</a>
   </p>
+  {{/if}}
 </div>
 
 <hr>
 <h2 class="display-6">Postagens recentes</h2>
 
 {{#each postagens}}
-<div class="card mt-4">
+<div class="card mt-4 mb-4">
   <div class="card-body">
     <h3>{{titulo}}</h3>
     <p>{{descricao}}</p>
